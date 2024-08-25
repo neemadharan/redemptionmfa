@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Code</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Redeem Your Code</h1>
+    <form action="/api/validatecode" method="POST">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" required>
+        <br>
+        <label for="code">Redemption Code:</label>
+        <input type="text" id="code" name="code" required>
+        <br>
+        <button type="submit">Validate Code</button>
+    </form>
+</body>
+<script>
+    const urlObj = new URL(window.location.href);
+    const params = new URLSearchParams(urlObj.search);
+    document.getElementById('code').value = params.get('code');
+</script>
+</html>
