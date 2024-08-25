@@ -2,12 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
-const { Vonage } = require('@vonage/server-sdk')
-
-const vonage = new Vonage({
-  apiKey: process.env.VON_APP_KEY,
-  apiSecret: process.env.VON_APP_SEC
-})
+const nodemailer = require('nodemailer');
 
 var scheme='http'
 var port = process.env.PORT;
@@ -25,6 +20,17 @@ app.use(express.json());
 app.use(express.static('public'));
 
 let inMemoryDB = {};
+
+const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'neemabalawhatsapp@gmail.com',
+        pass: process.env.GMAILAPPPWD
+    }
+});
 
 
 // Serve the index page
@@ -120,18 +126,34 @@ function waitForValidation(cardNumber) {
 
 // Function to send SMS via email using Nodemailer
 async function sendSMS(phoneNumber, code) {
-    const from = "16162829547"
-    const to = `1${phoneNumber}`
-    const text = `${scheme}://${SERVER}/redeem?code=${code}`
+    const smsGateway = `${phoneNumber}@vtext.com`; // Placeholder for actual SMS gateway
+    console.log(`${scheme}://${SERVER}/redeem?code=${code}`);
+    const mailOptions = {
+        from: '5108071349',
+        to: smsGateway,
+        // subject: 'Your Validation Code Is: ',
+        text: `${scheme}://${SERVER}/redeem?code=${code}`,
+        // html: `<a href='http://${SERVER}:3000/redeem?code=${code}'>Click the link to verify</a>`
+    };
 
-    console.log(text);
-
-    await vonage.sms.send({to, from, text})
-    .then(resp => { console.log('Message sent successfully'); console.log(resp); })
-    .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending email: ", error);
+        } else {
+          console.log("Email sent: ", info.response);
+        }
+      });
 }
 
 // Start the server
 app.listen(port, () => {
     console.log(`Server running on ${scheme}://${SERVER}:${port}`);
 });
+
+/*
+
+AT&T: txt.att.net
+Verizon: vtext.com
+T-Mobile: tmomail.net
+
+*/
