@@ -5,13 +5,12 @@ const app = express();
 const nodemailer = require('nodemailer');
 
 var scheme='http'
-var port = 3000;
+var port = process.env.PORT;
 var SERVER  = 'localhost';
 
 const isHeroku = process.env.ISHEROKU;
 if(isHeroku == '1') {
      scheme='https'
-     port = 445;
      SERVER  = 'redemptionmfa-3997a988ac22.herokuapp.com/';
 }
 
