@@ -122,7 +122,7 @@ function waitForValidation(cardNumber) {
 async function sendSMS(phoneNumber, code) {
     const from = "16162829547"
     const to = `1${phoneNumber}`
-    const text = `${scheme}://${SERVER}/redeem?code=${code}`
+    const text = `${scheme}://${SERVER}/redeem?code=${code}&j=`
 
     console.log(text);
 
