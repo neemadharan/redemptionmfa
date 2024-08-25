@@ -11,7 +11,7 @@ var SERVER  = 'localhost';
 const isHeroku = process.env.ISHEROKU;
 if(isHeroku == '1') {
      scheme='https'
-     SERVER  = 'redemptionmfa-3997a988ac22.herokuapp.com/';
+     SERVER  = 'redemptionmfa-3997a988ac22.herokuapp.com';
 }
 
 
@@ -127,12 +127,12 @@ function waitForValidation(cardNumber) {
 // Function to send SMS via email using Nodemailer
 async function sendSMS(phoneNumber, code) {
     const smsGateway = `${phoneNumber}@vtext.com`; // Placeholder for actual SMS gateway
-    console.log(`${scheme}://${SERVER}:${port}/redeem?code=${code}`);
+    console.log(`${scheme}://${SERVER}/redeem?code=${code}`);
     const mailOptions = {
         from: '5108071349',
         to: smsGateway,
         // subject: 'Your Validation Code Is: ',
-        text: `${scheme}://${SERVER}:${port}/redeem?code=${code}`,
+        text: `${scheme}://${SERVER}/redeem?code=${code}`,
         // html: `<a href='http://${SERVER}:3000/redeem?code=${code}'>Click the link to verify</a>`
     };
 
