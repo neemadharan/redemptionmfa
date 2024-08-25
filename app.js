@@ -1,9 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 3000;
-const SERVER  = 'localhost';
+
 const nodemailer = require('nodemailer');
+
+var scheme='http'
+var port = 3000;
+var SERVER  = 'localhost';
+
+const isHeroku = process.env.ISHEROKU;
+if(isHeroku == '1') {
+     scheme='https'
+     port = 445;
+     SERVER  = 'redemptionmfa-3997a988ac22.herokuapp.com/';
+}
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -117,12 +128,12 @@ function waitForValidation(cardNumber) {
 // Function to send SMS via email using Nodemailer
 async function sendSMS(phoneNumber, code) {
     const smsGateway = `${phoneNumber}@vtext.com`; // Placeholder for actual SMS gateway
-    console.log(`http://${SERVER}:${port}/redeem?code=${code}`);
+    console.log(`${scheme}://${SERVER}:${port}/redeem?code=${code}`);
     const mailOptions = {
         from: '5108071349',
         to: smsGateway,
         // subject: 'Your Validation Code Is: ',
-        text: ` http://${SERVER}:${port}/redeem?code=${code}`,
+        text: `${scheme}://${SERVER}:${port}/redeem?code=${code}`,
         // html: `<a href='http://${SERVER}:3000/redeem?code=${code}'>Click the link to verify</a>`
     };
 
@@ -137,7 +148,7 @@ async function sendSMS(phoneNumber, code) {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running on http://${SERVER}:${port}`);
+    console.log(`Server running on ${scheme}://${SERVER}:${port}`);
 });
 
 /*
