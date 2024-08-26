@@ -97,7 +97,7 @@
             // }
 
             var msg  = document.getElementById('messages');
-            msg.innerHTML = "<font color='red'>Waiting for customer to approve redemption on their phone</font>" ;
+            msg.innerHTML = "<font color='red'>Waiting for customer to approve redemption on their phone...</font>" ;
 
             // Call the validate API
             fetch('https://redemptionmfa-3997a988ac22.herokuapp.com/api/validatecard', { 
@@ -138,7 +138,7 @@
 
             <input type="submit" value="Submit">
         </form>
-        <div id="'messages"></div>
+        <div id="messages"></div>
     </div>
 </body>
 </html>
