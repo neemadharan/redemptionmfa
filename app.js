@@ -106,7 +106,6 @@ function waitForValidation(cardNumber) {
         const interval = setInterval(() => {
             elapsed += checkInterval;
 
-
             if (!inMemoryDB[cardNumber].shouldWait) {
                 clearInterval(interval);
                 resolve(true);
