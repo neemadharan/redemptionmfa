@@ -87,7 +87,7 @@ app.post('/api/validatecode', (req, res) => {
     inMemoryDB[cn].shouldWait = false;
     if (!inMemoryDB[phoneNumber] || inMemoryDB[phoneNumber].code !== code) {
         inMemoryDB[cn].validated = false;
-        res.status(200).send("Invalid phone number or code");
+        res.status(404).send("Invalid phone number or code");
     } else {
         inMemoryDB[cn].validated = true;
         res.status(200).send("Code validated");
