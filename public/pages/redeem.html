@@ -96,6 +96,9 @@
             //     alert('Gift card is invalid!');
             // }
 
+            var msg  = document.getElementById('messages');
+            msg.innerHTML = "<font color='red'>Waiting for customer to approve redemption on their phone</font>" ;
+
             // Call the validate API
             fetch('https://redemptionmfa-3997a988ac22.herokuapp.com/api/validatecard', { 
                 method: 'POST',
@@ -107,14 +110,14 @@
             .then(response => {
                 console.log(response);
                 if (response.status == 200) {
-                    alert('Gift card is Validated and Redeemed!');
+                    msg.innerHTML = "<font color='green'>Gift card is Validated and Redeemed!</font>";
                 } else {
-                    alert('Gift card is invalid!');
+                    msg.innerHTML = "<font color='red'>Invalid Redemption!</font>";
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while validating the gift card.');
+                msg.innerHTML = 'An error occurred while validating the gift card.';
             });
         }
     </script>
@@ -135,6 +138,7 @@
 
             <input type="submit" value="Submit">
         </form>
+        <div id="'messages"></div>
     </div>
 </body>
 </html>
