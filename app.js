@@ -79,7 +79,7 @@ app.post('/api/validatecard', async (req, res) => {
 
         await waitForValidation(cardNumber);
         if(inMemoryDB[cardNumber].validated) res.status(200).send("Code validated successfully.");
-        else res.status(200).send("Code validated failed.");
+        else res.status(400).send("Code validated failed.");
     } catch (error) {
         console.log(error);
         res.status(400).send("Code validation failed or timed out.");
@@ -94,7 +94,7 @@ app.post('/api/validatecode', (req, res) => {
     inMemoryDB[cn].shouldWait = false;
     if (!inMemoryDB[phoneNumber] || inMemoryDB[phoneNumber].code !== code) {
         inMemoryDB[cn].validated = false;
-        res.status(404).send("Invalid phone number or code");
+        res.status(400).send("Invalid phone number or code");
     } else {
         inMemoryDB[cn].validated = true;
         res.status(200).send("Code validated");
