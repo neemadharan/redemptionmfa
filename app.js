@@ -53,7 +53,7 @@ app.post('/api/register', (req, res) => {
     inMemoryDB[cardNumber] = { cardNumber, phoneNumber, code: null, validated: false };
     inMemoryDB[phoneNumber] = { cardNumber, phoneNumber, code: null, validated: false };
 
-    res.status(200).send("Card and phone number registered.");
+    res.status(200).send("Your Card number and phone number has been registered.");
 });
 
 // ValidateCard API - generates a unique code and sends SMS (mock)
