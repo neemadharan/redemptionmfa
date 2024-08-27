@@ -88,14 +88,12 @@ app.post('/api/validatecard', async (req, res) => {
 
 // ValidateCode API - validates the code against the phone number
 app.post('/api/validatecode', (req, res) => {
-    const { phoneNumber, code, yesno } = req.body;
+    const { phoneNumber, code } = req.body;
+
     var cn = inMemoryDB[phoneNumber].cardNumber;
     
     inMemoryDB[cn].shouldWait = false;
-    if(yesno == 'no') {
-        inMemoryDB[cn].validated = false;
-        res.status(400).send("Invalid");
-    } else if (!inMemoryDB[phoneNumber] || inMemoryDB[phoneNumber].code !== code) {
+    if (!inMemoryDB[phoneNumber] || inMemoryDB[phoneNumber].code !== code) {
         inMemoryDB[cn].validated = false;
         res.status(400).send("Invalid phone number or code");
     } else {
