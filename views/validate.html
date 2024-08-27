@@ -9,13 +9,17 @@
 <body>
     <h1>Redeem Your Code</h1>
     <form action="/api/validatecode" method="POST">
+        Do you recogonize this transaction? <input type="radio" id="yes" name="yesno" value="yes">
+        <label for="yes">Yes</label>
+        <input type="radio" id="no" name="yesno" value="no">
+        <label for="no">No</label><br>
         <label for="phoneNumber">Phone Number:</label>
         <input type="text" id="phoneNumber" name="phoneNumber" required>
         <br>
         <label for="code">Redemption Code:</label>
         <input type="text" id="code" name="code" required>
         <br>
-        <button type="submit">Validate Code</button>
+        <button type="submit">Submit</button>
     </form>
 </body>
 <script>
